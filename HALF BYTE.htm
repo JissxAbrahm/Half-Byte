@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-id="th-modified">HALF BYTE</title>
+    <link href="HALF%20BYTE_files/css2_k7uP.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: #fcfbf9; color: #1a1a2e; overflow-x: hidden; }
+
+        /* Animated Background & Live Pattern */
+        .animated-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; background: #fcfbf9; }
+        
+        /* Live Grid Animation */
+        .pattern-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(211, 207, 199, 0.6) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(211, 207, 199, 0.6) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: panGrid 15s linear infinite;
+            z-index: -2;
+        }
+        @keyframes panGrid {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 40px; }
+        }
+
+        .neon-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.5; animation: floatOrb 20s infinite alternate ease-in-out; }
+        .orb1 { width: 600px; height: 600px; background: #d0e3ff; top: -150px; left: -150px; }
+        .orb2 { width: 500px; height: 500px; background: #ffe3d0; bottom: -100px; right: -150px; animation-delay: -5s; }
+        @keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 100px) scale(1.1); } }
+
+        /* Hero */
+        .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .hero .team-subtitle { font-size: 1rem; font-weight: 600; letter-spacing: 4px; color: #d97736; text-transform: lowercase; margin-bottom: 10px; opacity: 0; animation: fadeIn 1.5s ease-out forwards; }
+        
+        /* --- CHANGED: Fade in from bottom (fadeInUp) with a 1.5s delay --- */
+        .hero h1 { font-size: 5vw; font-weight: 800; text-transform: uppercase; margin-bottom: 30px; opacity: 0; animation: fadeInUp 1.2s ease-out 1.5s forwards; }
+        
+        /* --- CHANGED: Fade in from bottom (fadeInUp) with a 2.0s delay --- */
+        .hero img { width: 319px; height: 319px; object-fit: contain; mix-blend-mode: multiply; opacity: 0; animation: fadeInUp 1.2s ease-out 2s forwards; }
+        
+        @keyframes fadeIn { to { opacity: 1; } }
+        
+        /* --- ADDED: Keyframes for bottom-to-top fade in --- */
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Team Section Base */
+        .team-section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 80px; padding-bottom: 80px; }
+        
+        /* Leadership (Alternating Layout) */
+        .profile-wrapper { display: flex; width: 100%; }
+        .align-left { justify-content: flex-start; }
+        .align-right { justify-content: flex-end; margin-left: auto; }
+        
+        .profile-box { 
+            position: relative;
+            background: #ffffff; padding: 40px; border-radius: 30px; display: flex; align-items: center; gap: 40px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.05);
+            width: 95%; max-width: 1000px; opacity: 0; transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Hover Effect for Profile Boxes */
+        .profile-box.reveal-active:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            border-color: #d97736;
+            z-index: 10;
+        }
+
+        /* Call Button CSS */
+        .call-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 46px;
+            background: #e2f5e9;
+            border: 2px solid #86d3a5;
+            border-radius: 23px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            cursor: pointer;
+            width: 46px;
+            transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            z-index: 20;
+        }
+
+        .call-btn:hover {
+            width: 180px;
+            box-shadow: 0 6px 20px rgba(134, 211, 165, 0.4);
+        }
+
+        .call-icon {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #27ae60;
+        }
+
+        .call-icon svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .call-text {
+            white-space: nowrap;
+            font-weight: 700;
+            color: #2e7d32;
+            font-size: 0.95rem;
+            padding: 0 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .call-btn:hover .call-text { opacity: 1; transition-delay: 0.1s; }
+
+        .call-btn.position-right {
+            left: calc(100% - 23px);
+            flex-direction: row;
+        }
+
+        .call-btn.position-left {
+            right: calc(100% - 23px);
+            flex-direction: row-reverse;
+        }
+
+        /* Leadership Boxes */
+        .leadership-box { padding: 44px; max-width: 920px; }
+        .leadership-box .profile-image-container { width: 235px; height: 310px; }
+
+        /* Unique Animations for Leadership & Team */
+        .reveal-left { transform: translateX(-150px) scale(0.9); }
+        .reveal-right { transform: translateX(150px) scale(0.9); }
+        .reveal-up { transform: translateY(80px); }
+        .reveal-active { opacity: 1; transform: translate(0, 0) scale(1); }
+
+        /* Shared Profile Content */
+        .profile-image-container { flex-shrink: 0; width: 250px; height: 350px; border-radius: 20px; overflow: hidden; }
+        .profile-image-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .profile-info { flex: 1; padding-right: 20px; }
+        .role { color: #d97736; text-transform: uppercase; letter-spacing: 3px; font-weight: 800; font-size: 0.8rem; margin-bottom: 8px; }
+        .name { font-size: 2.5rem; line-height: 1; font-weight: 800; margin-bottom: 20px; color: #000; }
+        
+        .info-grid { display: grid; gap: 12px; }
+        .info-item { border-left: 3px solid #d97736; padding-left: 15px; }
+        .label { font-size: 0.7rem; color: #888; text-transform: uppercase; font-weight: 700; display: block; }
+        .value { font-size: 1rem; font-weight: 600; color: #333; }
+
+        /* Team Grid Layout (2x2) */
+        .team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; width: 100%; }
+
+        /* Adjustments for Grid Items */
+        .team-grid .profile-box { width: 100%; max-width: none; padding: 30px; gap: 25px; }
+        .team-grid .profile-image-container { width: 170px; height: 250px; }
+        .team-grid .name { font-size: 1.8rem; margin-bottom: 15px; }
+
+        /* Tagline Style */
+        .handwritten-tagline {
+            font-family: 'Caveat', 'Comic Sans MS', cursive;
+            font-size: 35px;
+            text-align: center;
+            color: #d97736;
+            margin: 0 auto 10px auto;
+            padding: 0 20px;
+        }
+
+        /* Footer */
+        .site-footer { text-align: center; padding: 20px 20px 40px 20px; color: #888; font-size: 0.9rem; font-weight: 500; background: transparent; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .team-grid .profile-image-container { width: 200px; height: 280px; }
+        }
+        @media (max-width: 600px) {
+            .profile-box, .team-grid .profile-box { flex-direction: column; text-align: center; padding: 30px 20px; margin-bottom: 20px; }
+            .profile-image-container, .team-grid .profile-image-container, .leadership-box .profile-image-container { width: 100%; max-width: 250px; height: 250px; }
+            .info-item { border-left: none; border-top: 3px solid #d97736; padding-left: 0; padding-top: 10px; }
+            .profile-info { padding-right: 0; }
+            
+            /* Center buttons on mobile */
+            .call-btn {
+                top: auto; bottom: -23px; transform: translateX(-50%);
+                left: 50% !important; right: auto !important;
+                flex-direction: row !important;
+            }
+        }
+    </style>
+<meta property="og:title" content="HALF BYTE" data-id="th-modified"><meta name="description" content="Collection of Documents" data-id="th-modified"><meta property="og:description" content="Collection of Documents" data-id="th-modified"><meta property="og:image" content="https://tiiny.host/assets/logo-purple-bg.png" data-id="th-modified"><meta property="og:image:width" content="1501" data-id="th-modified"><meta property="og:image:height" content="1501" data-id="th-modified"><meta property="og:image:type" content="image/png" data-id="th-modified"><meta property="og:url" content="https://1-jpg.tiiny.site/" data-id="th-modified"><meta property="og:type" content="website" data-id="th-modified"><script defer="defer" data-domain="1-jpg.tiiny.site" src="HALF%20BYTE_files/plausible_k7uP.js"></script><script type="text/javascript" src="HALF%20BYTE_files/ad-script_k7uP.js"></script></head>
+<body><div style="position: fixed !important; bottom: 0% !important; left: 0% !important; right: 0% !important; width: 100% !important; height: 55px !important; z-index: 9999 !important;"><a href="https://tiiny.host/?ref=free-site">
+    <div style="padding: 10px !important; height: 55px; text-align: center; background: rgb(220,137,232) !important; background: linear-gradient(141deg, rgba(220,137,232,1) 0%, rgba(144,64,204,1) 100%) !important;">
+      <img style="height: 35px !important; width: auto !important;" src="HALF%20BYTE_files/ad_k7uP.png" alt="tiiny.host">
+    </div>
+  </a></div>
+
+    <div class="animated-bg">
+        <div class="pattern-bg"></div>
+        <div class="neon-orb orb1"></div>
+        <div class="neon-orb orb2"></div>
+    </div>
+
+    <header class="hero">
+        <div class="team-subtitle">team 4</div>
+        <h1>HALF BYTE</h1>
+        <img src="HALF%20BYTE_files/logo_k7uP.jpeg" alt="Logo">
+    </header>
+
+    <main class="team-section">
+        
+        <div class="profile-wrapper align-left">
+            <article class="profile-box leadership-box reveal-left">
+                <div class="call-btn position-right">
+                    <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"></path></svg></div>
+                    <span class="call-text">+91 6282453752</span>
+                </div>
+                <div class="profile-image-container"><img src="HALF%20BYTE_files/1.jpg_k7uP.jpeg" alt="Mariya" loading="lazy"></div>
+                <div class="profile-info">
+                    <div class="role">Captain</div>
+                    <div class="name">Mariya Antony</div>
+                    <div class="info-grid">
+                        <div class="info-item"><span class="label">Qualification</span><span class="value">BCA GRADUATE</span></div>
+                        <div class="info-item"><span class="label">Hometown</span><span class="value">Kannur, Kerala</span></div>
+                        <div class="info-item"><span class="label">Education</span><span class="value">St Joseph College Devagiri, Calicut</span></div>
+                        <div class="info-item"><span class="label">Extra Note</span><span class="value">Junior Red Cross</span></div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="profile-wrapper align-right">
+            <article class="profile-box leadership-box reveal-right" style="transition-delay: 0.3s;">
+                <div class="call-btn position-left">
+                    <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"></path></svg></div>
+                    <span class="call-text">+91 9188508110</span>
+                </div>
+                <div class="profile-image-container"><img src="HALF%20BYTE_files/11_k7uP.jpeg" alt="Jiss" loading="lazy"></div>
+                <div class="profile-info">
+                    <div class="role">Vice Captain</div>
+                    <div class="name">Jiss Abraham</div>
+                    <div class="info-grid">
+                        <div class="info-item"><span class="label">Qualification</span><span class="value">BCA GRADUATE</span></div>
+                        <div class="info-item"><span class="label">Hometown</span><span class="value">Idukki, Kerala</span></div>
+                        <div class="info-item"><span class="label">Education</span><span class="value">Mar Augusthinose College, Ramapuram</span></div>
+                        <div class="info-item"><span class="label">Extra Note</span><span class="value">Tab</span></div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="team-grid">
+            
+            <article class="profile-box reveal-up">
+                <div class="call-btn position-left">
+                    <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"></path></svg></div>
+                    <span class="call-text">+91 9037171905</span>
+                </div>
+                <div class="profile-image-container"><img src="HALF%20BYTE_files/9_k7uP.jpeg" alt="Amit" loading="lazy"></div>
+                <div class="profile-info">
+                    <div class="role">Team Member</div>
+                    <div class="name">Amit Andalat Ajithkumar</div>
+                    <div class="info-grid">
+                        <div class="info-item"><span class="label">Qualification</span><span class="value">BCA Graduate</span></div>
+                        <div class="info-item"><span class="label">Hometown</span><span class="value">North Paravur, Ernakulam</span></div>
+                        <div class="info-item"><span class="label">Education</span><span class="value">Sacred Heart College, Thevara</span></div>
+                        <div class="info-item"><span class="label">Extra Note</span><span class="value">Studied Abroad</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="profile-box reveal-up" style="transition-delay: 0.1s;">
+                <div class="call-btn position-right">
+                    <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"></path></svg></div>
+                    <span class="call-text">+91 9847563001</span>
+                </div>
+                <div class="profile-image-container"><img src="HALF%20BYTE_files/4.jpg_k7uP.jpeg" alt="Bhavana" loading="lazy"></div>
+                <div class="profile-info">
+                    <div class="role">Team Member</div>
+                    <div class="name">Bhavana Liz John</div>
+                    <div class="info-grid">
+                        <div class="info-item"><span class="label">Qualification</span><span class="value">BCA Graduate</span></div>
+                        <div class="info-item"><span class="label">Hometown</span><span class="value">Ernakulam</span></div>
+                        <div class="info-item"><span class="label">Education</span><span class="value">Yenepoya deemed-to-be university, Bangalore</span></div>
+                        <div class="info-item"><span class="label">Extra Note</span><span class="value">Single Child</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="profile-box reveal-up">
+                <div class="call-btn position-left">
+                    <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"></path></svg></div>
+                    <span class="call-text">+91 8089043919</span>
+                </div>
+                <div class="profile-image-container"><img src="HALF%20BYTE_files/5.jpg_k7uP.jpeg" alt="Arathi" loading="lazy"></div>
+                <div class="profile-info">
+                    <div class="role">Team Member</div>
+                    <div class="name">Arathi K M</div>
+                    <div class="info-grid">
+                        <div class="info-item"><span class="label">Qualification</span><span class="value">Bvoc Software Dev</span></div>
+                        <div class="info-item"><span class="label">Hometown</span><span class="value">Kundannoor, Maradu</span></div>
+                        <div class="info-item"><span class="label">Education</span><span class="value">St Teresa's College</span></div>
+                        <div class="info-item"><span class="label">Extra Note</span><span class="value">NCC C Certificate holder</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="profile-box reveal-up" style="transition-delay: 0.1s;">
+                <div class="call-btn position-right">
+                    <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"></path></svg></div>
+                    <span class="call-text">+91 7012009667</span>
+                </div>
+                <div class="profile-image-container"><img src="HALF%20BYTE_files/6.jpg_k7uP.jpeg" alt="Krishna" loading="lazy"></div>
+                <div class="profile-info">
+                    <div class="role">Team Member</div>
+                    <div class="name">Krishna M</div>
+                    <div class="info-grid">
+                        <div class="info-item"><span class="label">Qualification</span><span class="value">BCA</span></div>
+                        <div class="info-item"><span class="label">Hometown</span><span class="value">North Paravur, Ernakulam</span></div>
+                        <div class="info-item"><span class="label">Education</span><span class="value">Amrita Vishwa Vidyapeetham</span></div>
+                        <div class="info-item"><span class="label">Extra Note</span><span class="value">Athlete</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="profile-box reveal-up">
+                <div class="call-btn position-left">
+                    <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"></path></svg></div>
+                    <span class="call-text">+91 7736280712</span>
+                </div>
+                <div class="profile-image-container"><img src="HALF%20BYTE_files/7.jpg_k7uP.jpeg" alt="Abhinandh" loading="lazy"></div>
+                <div class="profile-info">
+                    <div class="role">Team Member</div>
+                    <div class="name">Abhinandh Anil</div>
+                    <div class="info-grid">
+                        <div class="info-item"><span class="label">Qualification</span><span class="value">BSc Computer Science</span></div>
+                        <div class="info-item"><span class="label">Hometown</span><span class="value">Perumbavoor</span></div>
+                        <div class="info-item"><span class="label">Education</span><span class="value">SSV College Valayanchirangara</span></div>
+                        <div class="info-item"><span class="label">Extra Note</span><span class="value">Singer</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="profile-box reveal-up">
+                <div class="call-btn position-right">
+                    <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"></path></svg></div>
+                    <span class="call-text">+91 8714164893</span>
+                </div>
+                <div class="profile-image-container"><img src="HALF%20BYTE_files/12_k7uP.jpeg" alt="Abhinandh" loading="lazy"></div>
+                <div class="profile-info">
+                    <div class="role">Team Member</div>
+                    <div class="name">Sanal Biju </div>
+                    <div class="info-grid">
+                        <div class="info-item"><span class="label">Qualification</span><span class="value">BSc Computer Science</span></div>
+                        <div class="info-item"><span class="label">Hometown</span><span class="value">Angamaly</span></div>
+                        <div class="info-item"><span class="label">Education</span><span class="value">Naipunnya Institution of Management and Information technology, Thrissur</span></div>
+                        <div class="info-item"><span class="label">Extra Note</span><span class="value">Football player</span></div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <div class="handwritten-tagline">--biting every opportunities--</div>
+
+    <footer class="site-footer">
+        <p>© 2026 HALF BYTE. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-active');
+                } else {
+                    entry.target.classList.remove('reveal-active');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.profile-box').forEach(el => observer.observe(el));
+    </script>
+
+<div style="height: 55px !important;"></div></body></html>
